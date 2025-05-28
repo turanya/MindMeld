@@ -1,0 +1,8 @@
+
+{
+  "name": "MindMeld: AI Story Generator",
+  "description": "An AI-powered application to transform thoughts into stories, brainstorm creative ideas, and reverse-engineer narratives. It uses Google Gemini API for content generation and supports voice input.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
