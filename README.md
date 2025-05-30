@@ -8,7 +8,7 @@
 
 ## Cosmic AI Storytelling
 
-[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/turanyaaa?igsh=MWhwbWtpdGxmc3Y4Mg==)
+[![LinkedIn - Turanya](https://img.shields.io/badge/LinkedIn-Turanya-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/turanyamishra?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) [![LinkedIn - Ankita](https://img.shields.io/badge/LinkedIn-Ankita-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ankita-pradhan-24404a2b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
 
 </div>
 
@@ -63,5 +63,5 @@ MindMeld features a beautiful cosmic interface with:
 ---
 
 <div align="center">
-  <p>Made with ❤️ by <a href="https://www.instagram.com/turanyaaa?igsh=MWhwbWtpdGxmc3Y4Mg==">Turanya</a> & <a href="https://www.instagram.com/_.potter._.verse._?igsh=YnJ2emlsaHA1NDNx">Ankita</a></p>
+  <p>Made with ❤️ by <a href="https://www.linkedin.com/in/turanyamishra?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Turanya</a> & <a href="https://www.linkedin.com/in/ankita-pradhan-24404a2b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Ankita</a></p>
 </div>
