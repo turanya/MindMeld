@@ -7,10 +7,27 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
+
+# Environment files and API keys
+.env
+.env.*
 *.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# API key files
+api-key.js
+api-key.ts
+apiKey.js
+apiKey.ts
+keys.js
+keys.ts
 
 # Editor directories and files
 .vscode/*

@@ -13,6 +13,7 @@ export const LITERARY_STYLES: LiteraryStyle[] = [
   LiteraryStyle.SHAKESPEAREAN,
   LiteraryStyle.FAIRY_TALE,
   LiteraryStyle.EPIC_POEM,
+  LiteraryStyle.HORROR,
 ];
 
 export const APP_TITLE = "MindMeld";

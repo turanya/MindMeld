@@ -8,7 +8,8 @@ export enum LiteraryStyle {
   SCIFI_SCREENPLAY = "Sci-Fi Screenplay Scene",
   SURREALIST_SHORT_STORY = "Surreal Short Story",
   FAIRY_TALE = "Classic Fairy Tale",
-  EPIC_POEM = "Epic Poem Snippet"
+  EPIC_POEM = "Epic Poem Snippet",
+  HORROR = "Horror"
 }
 
 export interface ChatMessage {
@@ -21,7 +22,8 @@ export interface ChatMessage {
 export enum ActiveTab {
   THOUGHT_TO_STORY = "ThoughtToStory",
   BRAINSTORM_PARTNER = "BrainstormPartner",
-  REVERSE_STORY = "ReverseStory"
+  REVERSE_STORY = "ReverseStory",
+  AUTH = "Auth"
 }
 
 export interface GroundingChunkWeb {
@@ -31,4 +33,15 @@ export interface GroundingChunkWeb {
 
 export interface GroundingChunk {
   web: GroundingChunkWeb;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+export enum AuthMode {
+  LOGIN = "Login",
+  SIGNUP = "Signup"
 }

@@ -2,6 +2,7 @@
 import React from 'react';
 import { ActiveTab } from '../types';
 import { LightbulbIcon, MessageSquareIcon, SearchIcon } from './icons';
+import { StyledButton } from './StyledButton';
 
 interface TabNavigationProps {
   activeTab: ActiveTab;
@@ -16,24 +17,19 @@ const tabConfig = [
 
 export const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabChange }) => {
   return (
-    <nav className="flex justify-center space-x-2 sm:space-x-4 p-2 bg-slate-800 rounded-xl shadow-md border border-slate-700">
+    <nav className="flex justify-center items-center p-2 bg-[#0d1321] rounded-full w-full max-w-xl mx-auto shadow-lg">
       {tabConfig.map(({ id, label, Icon }) => (
-        <button
+        <StyledButton
           key={id}
+          isActive={activeTab === id}
           onClick={() => onTabChange(id)}
-          className={`
-            flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3 py-3 sm:px-6 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-all duration-200 ease-in-out
-            focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-75
-            ${activeTab === id 
-              ? 'bg-purple-600 text-white shadow-lg transform scale-105' 
-              : 'bg-slate-700 text-slate-300 hover:bg-slate-600 hover:text-white'
-            }
-          `}
         >
-          <Icon className={`w-5 h-5 ${activeTab === id ? 'text-white' : 'text-slate-400'}`} />
+          <Icon className="w-5 h-5 mr-1.5" />
           {label}
-        </button>
+        </StyledButton>
       ))}
     </nav>
   );
 };
+
+export default TabNavigation;
