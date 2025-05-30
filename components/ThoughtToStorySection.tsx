@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { LiteraryStyle } from '../types';
 import { LITERARY_STYLES } from '../constants';
 import { generateStoryWithGemini } from '../services/geminiService';
+import CharacterPortraitsSection from './CharacterPortraitsSection';
 
 interface ThoughtToStorySectionProps {
   currentThought: string;
@@ -239,6 +240,11 @@ export const ThoughtToStorySection: React.FC<ThoughtToStorySectionProps> = ({ cu
           <h3 className="text-lg font-semibold mb-4 text-purple-300">Generated Narrative</h3>
           <p className="text-slate-100 whitespace-pre-wrap">{generatedContent}</p>
         </div>
+      )}
+      
+      {/* Character Portraits Section - only show when there's a generated story */}
+      {generatedContent && (
+        <CharacterPortraitsSection storyText={generatedContent} />
       )}
     </div>
   );
