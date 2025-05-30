@@ -28,11 +28,13 @@
 
 ### Installation
 
-<div align="center">
-<img src="./public/terminal-install.svg" alt="Terminal: npm install" width="400" />
-<br/>
-<img src="./public/terminal-run-dev.svg" alt="Terminal: npm run dev" width="400" />
-</div>
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
 
 1. Clone the repository
 2. Install dependencies with `npm install`
