@@ -10,6 +10,8 @@ import { LogoutButton } from './components/LogoutButton';
 import { ActiveTab, User } from './types';
 import { APP_TITLE } from './constants';
 import SpaceBackground from './components/SpaceBackground';
+import Terminal from './components/Terminal';
+import TerminalRunDev from './components/TerminalRunDev';
 
 const App: React.FC = () => {
   const [apiKeyPresent, setApiKeyPresent] = useState<boolean>(false);
@@ -104,6 +106,11 @@ const App: React.FC = () => {
           <main className="bg-opacity-70 shadow-2xl rounded-xl p-6 md:p-8 min-h-[60vh] backdrop-blur-md border border-slate-700">
             {renderActiveTab()}
           </main>
+
+          <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
+            <Terminal />
+            <TerminalRunDev />
+          </div>
 
           <footer className="text-center text-sm text-slate-400 py-8">
             <p>&copy; {new Date().getFullYear()} {APP_TITLE}. Unleash your creative mind.</p>
