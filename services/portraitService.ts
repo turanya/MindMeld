@@ -3,22 +3,22 @@
 
 // Anime/Ghibli style character portraits
 const ANIME_PORTRAITS = [
-  'https://i.imgur.com/8wEGYRZ.png', // Anime girl with blue hair
-  'https://i.imgur.com/JWxMsaY.png', // Anime boy with dark hair
-  'https://i.imgur.com/5xVS2VU.png', // Ghibli style girl with brown hair
-  'https://i.imgur.com/N9JUVtk.png', // Anime character with red hair
-  'https://i.imgur.com/qKPQhLF.png', // Ghibli style boy with blonde hair
-  'https://i.imgur.com/3crnFDj.png', // Anime character with green hair
+  'https://cdn.pixabay.com/photo/2023/01/28/20/23/ai-generated-7751688_1280.jpg', // Anime girl with blue hair
+  'https://cdn.pixabay.com/photo/2023/07/05/18/13/anime-8108344_1280.jpg', // Anime boy with dark hair
+  'https://cdn.pixabay.com/photo/2023/06/14/09/13/anime-8062868_1280.jpg', // Ghibli style girl with brown hair
+  'https://cdn.pixabay.com/photo/2023/07/04/10/30/anime-8105907_1280.jpg', // Anime character with red hair
+  'https://cdn.pixabay.com/photo/2023/01/11/08/05/anime-7711413_1280.jpg', // Ghibli style boy with blonde hair
+  'https://cdn.pixabay.com/photo/2023/06/03/15/26/anime-8037886_1280.jpg', // Anime character with green hair
 ];
 
 // Realistic style character portraits
 const REALISTIC_PORTRAITS = [
-  'https://i.imgur.com/YkFMUsQ.png', // Realistic woman with dark hair
-  'https://i.imgur.com/JWVpWiK.png', // Realistic man with beard
-  'https://i.imgur.com/pHlZJGU.png', // Realistic young woman with blonde hair
-  'https://i.imgur.com/8vQGtHl.png', // Realistic man with glasses
-  'https://i.imgur.com/Qh9LjuW.png', // Realistic woman with red hair
-  'https://i.imgur.com/7bDGUCm.png', // Realistic older man with gray hair
+  'https://cdn.pixabay.com/photo/2017/11/06/09/53/tiger-2923186_1280.jpg', // Realistic woman with dark hair
+  'https://cdn.pixabay.com/photo/2017/08/01/01/33/bearded-vulture-2562852_1280.jpg', // Realistic man with beard
+  'https://cdn.pixabay.com/photo/2022/12/24/21/14/portrait-7676482_1280.jpg', // Realistic young woman with blonde hair
+  'https://cdn.pixabay.com/photo/2019/08/11/07/18/man-4398780_1280.jpg', // Realistic man with glasses
+  'https://cdn.pixabay.com/photo/2023/05/31/14/12/woman-8031866_1280.jpg', // Realistic woman with red hair
+  'https://cdn.pixabay.com/photo/2016/11/21/16/55/adult-1846436_1280.jpg', // Realistic older man with gray hair
 ];
 
 export enum PortraitStyle {
