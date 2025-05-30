@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { PortraitStyle } from '../services/portraitService';
 
 interface CharacterPortraitProps {
   characterDescription: string;
-  onGenerate: (description: string) => Promise<string>;
+  onGenerate: (description: string, style: PortraitStyle) => Promise<string>;
 }
 
 const CharacterPortrait: React.FC<CharacterPortraitProps> = ({ 
@@ -13,6 +14,7 @@ const CharacterPortrait: React.FC<CharacterPortraitProps> = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [portraitUrl, setPortraitUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [selectedStyle, setSelectedStyle] = useState<PortraitStyle>(PortraitStyle.ANIME);
 
   const generatePortrait = async () => {
     if (!characterDescription.trim()) {
@@ -23,7 +25,7 @@ const CharacterPortrait: React.FC<CharacterPortraitProps> = ({
     try {
       setIsGenerating(true);
       setError(null);
-      const imageUrl = await onGenerate(characterDescription);
+      const imageUrl = await onGenerate(characterDescription, selectedStyle);
       setPortraitUrl(imageUrl);
     } catch (err) {
       setError("Failed to generate portrait. Please try again.");
@@ -53,6 +55,26 @@ const CharacterPortrait: React.FC<CharacterPortraitProps> = ({
       )}
       
       {error && <ErrorMessage>{error}</ErrorMessage>}
+      
+      <StyleSelector>
+        <h4>Portrait Style:</h4>
+        <StyleOptions>
+          <StyleOption 
+            isSelected={selectedStyle === PortraitStyle.ANIME}
+            onClick={() => setSelectedStyle(PortraitStyle.ANIME)}
+          >
+            <StyleIcon>🎨</StyleIcon>
+            <span>Anime/Ghibli</span>
+          </StyleOption>
+          <StyleOption 
+            isSelected={selectedStyle === PortraitStyle.REALISTIC}
+            onClick={() => setSelectedStyle(PortraitStyle.REALISTIC)}
+          >
+            <StyleIcon>📷</StyleIcon>
+            <span>Realistic</span>
+          </StyleOption>
+        </StyleOptions>
+      </StyleSelector>
       
       <GenerateButton 
         onClick={generatePortrait} 
@@ -183,6 +205,60 @@ const DescriptionBox = styled.div`
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.8);
   }
+`;
+
+const StyleSelector = styled.div`
+  width: 100%;
+  margin: 1rem 0;
+
+  h4 {
+    margin-top: 0;
+    color: #b259ff;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+`;
+
+const StyleOptions = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+`;
+
+interface StyleOptionProps {
+  isSelected: boolean;
+}
+
+const StyleOption = styled.div<StyleOptionProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: ${props => props.isSelected ? 'rgba(178, 89, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
+  border: 1px solid ${props => props.isSelected ? '#b259ff' : 'rgba(255, 255, 255, 0.1)'};
+  flex: 1;
+  max-width: 120px;
+
+  &:hover {
+    background: rgba(178, 89, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  span {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: ${props => props.isSelected ? '#b259ff' : 'rgba(255, 255, 255, 0.8)'};
+  }
+`;
+
+const StyleIcon = styled.div`
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
 `;
 
 export default CharacterPortrait;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CharacterPortrait from './CharacterPortrait';
-import { extractCharacterDescriptions, generateCharacterPortrait } from '../services/portraitService';
+import { extractCharacterDescriptions, generateCharacterPortrait, PortraitStyle } from '../services/portraitService';
 
 interface CharacterPortraitsSectionProps {
   storyText: string;
@@ -25,8 +25,8 @@ const CharacterPortraitsSection: React.FC<CharacterPortraitsSectionProps> = ({ s
     }
   }, [storyText]);
 
-  const handleGeneratePortrait = async (description: string) => {
-    return await generateCharacterPortrait(description);
+  const handleGeneratePortrait = async (description: string, style: PortraitStyle) => {
+    return await generateCharacterPortrait(description, style);
   };
 
   const handleDescriptionSelect = (description: string) => {
