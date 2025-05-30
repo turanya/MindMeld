@@ -28,6 +28,10 @@
 
 ### Installation
 
+### Terminal Commands
+
+<div align="center">
+
 ```bash
 # Install dependencies
 npm install
@@ -35,6 +39,12 @@ npm install
 # Start development server
 npm run dev
 ```
+
+</div>
+
+<div align="center">
+<img src="https://img.shields.io/badge/Terminal-0078D6?style=for-the-badge&logo=windows-terminal&logoColor=white" alt="Terminal" />
+</div>
 
 1. Clone the repository
 2. Install dependencies with `npm install`
