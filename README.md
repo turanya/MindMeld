@@ -63,5 +63,5 @@ MindMeld features a beautiful cosmic interface with:
 ---
 
 <div align="center">
-  <p>Made with ❤️ by <a href="https://www.instagram.com/turanyaaa?igsh=MWhwbWtpdGxmc3Y4Mg==">Turanya</a></p>
+  <p>Made with ❤️ by <a href="https://www.instagram.com/turanyaaa?igsh=MWhwbWtpdGxmc3Y4Mg==">Turanya</a> & <a href="https://www.instagram.com/_.potter._.verse._?igsh=YnJ2emlsaHA1NDNx">Ankita</a></p>
 </div>
