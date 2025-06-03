@@ -1,87 +1,110 @@
-// This service handles character portrait generation using the Gemini API
-// It converts character descriptions into image prompts and returns URLs for character portraits
+/// <reference types="vite/client" />
 
-// Anime/Ghibli style character portraits
-const ANIME_PORTRAITS = [
-  'https://cdn.pixabay.com/photo/2023/01/28/20/23/ai-generated-7751688_1280.jpg', // Anime girl with blue hair
-  'https://cdn.pixabay.com/photo/2023/07/05/18/13/anime-8108344_1280.jpg', // Anime boy with dark hair
-  'https://cdn.pixabay.com/photo/2023/06/14/09/13/anime-8062868_1280.jpg', // Ghibli style girl with brown hair
-  'https://cdn.pixabay.com/photo/2023/07/04/10/30/anime-8105907_1280.jpg', // Anime character with red hair
-  'https://cdn.pixabay.com/photo/2023/01/11/08/05/anime-7711413_1280.jpg', // Ghibli style boy with blonde hair
-  'https://cdn.pixabay.com/photo/2023/06/03/15/26/anime-8037886_1280.jpg', // Anime character with green hair
-];
+// This service handles character portrait generation using the Stability AI API
+// It converts character descriptions into image prompts and generates character portraits
 
-// Realistic style character portraits
-const REALISTIC_PORTRAITS = [
-  'https://cdn.pixabay.com/photo/2017/11/06/09/53/tiger-2923186_1280.jpg', // Realistic woman with dark hair
-  'https://cdn.pixabay.com/photo/2017/08/01/01/33/bearded-vulture-2562852_1280.jpg', // Realistic man with beard
-  'https://cdn.pixabay.com/photo/2022/12/24/21/14/portrait-7676482_1280.jpg', // Realistic young woman with blonde hair
-  'https://cdn.pixabay.com/photo/2019/08/11/07/18/man-4398780_1280.jpg', // Realistic man with glasses
-  'https://cdn.pixabay.com/photo/2023/05/31/14/12/woman-8031866_1280.jpg', // Realistic woman with red hair
-  'https://cdn.pixabay.com/photo/2016/11/21/16/55/adult-1846436_1280.jpg', // Realistic older man with gray hair
-];
+import { apiKeyManager } from './apiKeyManager';
 
 export enum PortraitStyle {
   ANIME = 'anime',
   REALISTIC = 'realistic'
 }
 
+interface StabilityResponse {
+  artifacts: Array<{
+    base64: string;
+  }>;
+}
+
+// Stability AI API configuration
+const STABILITY_API_URL = 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image';
+
+// Fallback portraits in case API fails
+const FALLBACK_PORTRAIT = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png';
+
 /**
- * Generate a character portrait based on a description
- * 
- * In a production app, this would connect to an image generation API
- * For this demo, we'll return curated images and simulate API calls
+ * Generate a character portrait based on a description using Stability AI API
  */
 export const generateCharacterPortrait = async (
   characterDescription: string, 
   style: PortraitStyle = PortraitStyle.ANIME
 ): Promise<string> => {
+  const apiKey = await apiKeyManager.getCurrentKey();
+  
+  if (!apiKey) {
+    console.warn('No valid Stability AI API key found, using fallback portrait');
+    return FALLBACK_PORTRAIT;
+  }
+
   try {
-    // In a real implementation, this would call an image generation API
-    // For now, we'll simulate the API call with a delay and return a curated image
-    
     // Create an optimized prompt for image generation based on style
     const imagePrompt = optimizeDescriptionForImageGeneration(characterDescription, style);
     console.log(`Generated ${style} image prompt:`, imagePrompt);
+
+    console.log('Making API request to:', STABILITY_API_URL);
+    const requestBody = {
+      text_prompts: [
+        {
+          text: imagePrompt,
+          weight: 1
+        }
+      ],
+      cfg_scale: 7,
+      height: 1024,
+      width: 1024,
+      samples: 1,
+      steps: 30,
+      style_preset: style === PortraitStyle.ANIME ? 'anime' : 'photographic'
+    };
+
+    console.log('Request body:', requestBody);
+
+    const response = await fetch(
+      STABILITY_API_URL,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify(requestBody)
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('API Error:', response.status, response.statusText);
+      console.error('Error details:', errorData);
+      console.error('Request URL:', STABILITY_API_URL);
+      console.error('Request headers:', {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: 'Bearer [HIDDEN]'
+      });
+      throw new Error(`API request failed: ${response.statusText}`);
+    }
+
+    const responseData = await response.json() as StabilityResponse;
     
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Select portrait collection based on style
-    const portraitCollection = style === PortraitStyle.ANIME ? ANIME_PORTRAITS : REALISTIC_PORTRAITS;
-    
-    // Choose the most appropriate portrait based on the description
-    const portraitIndex = selectAppropriatePortrait(characterDescription, portraitCollection);
-    return portraitCollection[portraitIndex];
+    if (responseData.artifacts && responseData.artifacts.length > 0) {
+      const base64Image = responseData.artifacts[0].base64;
+      return `data:image/png;base64,${base64Image}`;
+    }
+
+    throw new Error('No image generated');
   } catch (error) {
     console.error('Error generating character portrait:', error);
-    throw new Error('Failed to generate character portrait');
+    return FALLBACK_PORTRAIT;
   }
 };
 
-/**
- * Select the most appropriate portrait based on character description
- * This is a simple implementation that looks for key traits in the description
- */
-const selectAppropriatePortrait = (description: string, portraits: string[]): number => {
-  const lowerDesc = description.toLowerCase();
-  
-  // Check for specific traits and return the appropriate portrait index
-  if (lowerDesc.includes('blue hair') || lowerDesc.includes('azure')) return 0;
-  if (lowerDesc.includes('dark hair') || lowerDesc.includes('black hair')) return 1;
-  if (lowerDesc.includes('brown hair') || lowerDesc.includes('brunette')) return 2;
-  if (lowerDesc.includes('red hair') || lowerDesc.includes('ginger')) return 3;
-  if (lowerDesc.includes('blonde') || lowerDesc.includes('yellow hair')) return 4;
-  if (lowerDesc.includes('green hair') || lowerDesc.includes('teal')) return 5;
-  
-  // If no specific traits match, return a random portrait
-  return Math.floor(Math.random() * portraits.length);
-};
+
 
 /**
  * Optimize a character description for image generation
  * This function takes a raw character description and formats it
- * into a prompt that would work well with image generation APIs
+ * into a prompt that would work well with Stability AI API
  */
 const optimizeDescriptionForImageGeneration = (description: string, style: PortraitStyle): string => {
   // Clean up the description
@@ -89,9 +112,9 @@ const optimizeDescriptionForImageGeneration = (description: string, style: Portr
   
   // Format as an image generation prompt based on style
   if (style === PortraitStyle.ANIME) {
-    return `Anime/Ghibli style portrait of a character: ${cleanDescription}, vibrant colors, expressive eyes, clean lines, Studio Ghibli inspired, high quality illustration`;
+    return `detailed portrait of ${cleanDescription}, anime style art, highly detailed, digital painting, concept art, smooth, sharp focus, illustration, by greg rutkowski makoto shinkai takashi takeuchi`;
   } else {
-    return `Realistic portrait of a character: ${cleanDescription}, photorealistic, detailed features, expressive face, studio lighting, high resolution`;
+    return `detailed portrait of ${cleanDescription}, highly detailed, digital painting, artstation, concept art, smooth, sharp focus, illustration, realistic, art by artgerm and greg rutkowski and alphonse mucha`;
   }
 };
 
